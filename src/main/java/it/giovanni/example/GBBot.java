@@ -55,15 +55,8 @@ public class GBBot extends TelegramLongPollingBot {
 
 		long chat_id = update.getMessage().getChatId();
 		String message_text = update.getMessage().getText();
-		if (StringUtils.containsIgnoreCase(message_text, "debug")) {
-			SendMessage message = new SendMessage() // Create a message object
-				.setChatId(chat_id).setText(update.toString());
-			try {
-				sendMessage(message); // Sending our message object to user
-			} catch (TelegramApiException e) {
-				e.printStackTrace();
-			}
-		}
+		if (StringUtils.containsIgnoreCase(message_text, "debug"))
+			message_text = update.toString();
 
 		SendMessage message = new SendMessage() // Create a message object
 			.setChatId(chat_id).setText(message_text);
