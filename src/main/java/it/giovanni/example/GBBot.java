@@ -20,7 +20,11 @@ public class GBBot extends TelegramLongPollingBot {
                 SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id)
                     .setText(update.toString());
-                sendMessage(message);
+                try {
+                    sendMessage(message); // Sending our message object to user
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
             }
             
             if(StringUtils.containsIgnoreCase(message_text, "tilapia"))
