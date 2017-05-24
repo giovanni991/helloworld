@@ -1,1 +1,1 @@
-web: java -jar target/helloworld.jar
+worker: sh target/bin/worker
