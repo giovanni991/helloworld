@@ -15,7 +15,14 @@ public class GBBot extends TelegramLongPollingBot {
             // Set variables
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
-
+            
+            if(StringUtils.containsIgnoreCase(message_text, "debug")){
+                SendMessage message = new SendMessage() // Create a message object object
+                    .setChatId(chat_id)
+                    .setText(update.toString());
+                sendMessage(message);
+            }
+            
             if(StringUtils.containsIgnoreCase(message_text, "tilapia"))
         		message_text = "Di mare";
             
