@@ -28,6 +28,15 @@ public class GiovanniChannel extends BaseCustomChannel{
 		
 		if(StringUtils.containsIgnoreCase(message_text, "spendi poco"))
 			message_text = "hai poco";
+		
+		if(StringUtils.containsIgnoreCase(message_text, "Coppo")){
+			StringBuilder msg = new StringBuilder("Coppo");
+			for(int i=0;i<3;i++){
+				SendMessage message = new SendMessage().setChatId(chat_id).setText(msg.append("o").toString());
+				processMessage.add(message);
+			}
+			return processMessage;
+		}
 
 		SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
 		processMessage.add(message);
