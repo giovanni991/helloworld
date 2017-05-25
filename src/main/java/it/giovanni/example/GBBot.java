@@ -1,10 +1,14 @@
 package it.giovanni.example;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+
+import it.giovanni.example.channels.GiovanniChannel;
 
 public class GBBot extends TelegramLongPollingBot {
 	@Override
@@ -23,32 +27,17 @@ public class GBBot extends TelegramLongPollingBot {
 	}
 
 	public void giovanniChannel(Update update) {
-		long chat_id = update.getMessage().getChatId();
-		String message_text = update.getMessage().getText();
-		if (StringUtils.containsIgnoreCase(message_text, "debug")) {
-			SendMessage message = new SendMessage() // Create a message object
-				.setChatId(chat_id).setText(update.toString());
-			try {
-				sendMessage(message); // Sending our message object to user
-			} catch (TelegramApiException e) {
-				e.printStackTrace();
+		GiovanniChannel gc=new GiovanniChannel(update);
+		List<SendMessage> messages = gc.getMessages();
+		if(messages!=null&&messages.size() > 0){
+			for (SendMessage sendMessage : messages) {
+				try {
+					sendMessage(sendMessage);
+				} catch (TelegramApiException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-
-		if (StringUtils.containsIgnoreCase(message_text, "tilapia"))
-			message_text = "Di mare";
-		
-		if (StringUtils.containsIgnoreCase(message_text, "spendi poco"))
-			message_text = "hai poco";
-
-		SendMessage message = new SendMessage() // Create a message object
-			.setChatId(chat_id).setText(message_text);
-		try {
-			sendMessage(message); // Sending our message object to user
-		} catch (TelegramApiException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public void giangiChannel(Update update) {
